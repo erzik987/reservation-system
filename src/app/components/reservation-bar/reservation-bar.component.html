@@ -1,0 +1,26 @@
+Voľné termíny
+<div class="reservation-bar">
+    <div class="first-row">
+        <div *ngFor="let bar of mockReservationBar" class="repeat-segment">
+            <div [ngClass]="bar.reserved ? 'segment-full' : 'segment-empty'" class="fullSize" [options]="bar.tooltipOptions" 
+            tooltip="{{bar.userSummary?.firstName}} {{bar.userSummary?.lastName}} &lt;br> {{bar.userSummary?.reservationTime}}"
+              >
+                
+            </div>
+            
+            <!-- <div *ngIf="bar.mark" class="mark">
+                {{bar.mark.hours}}:{{bar.mark.minutes}}
+            </div> -->
+        </div>
+    </div>
+    <div class="second-row">
+        <div *ngFor="let frame of timeFrames" class="time-frame">
+            <div>
+                {{frame?.mark?.hours}}:{{frame?.mark?.minutes}}0
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- &lt;div *ngFor='let o of bar.userSummary?.options'>{{o.title}}&lt;/div> -->

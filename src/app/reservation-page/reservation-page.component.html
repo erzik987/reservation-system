@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="mat-cards-row">
+    <mat-card class="inputs-card">
+      <mat-form-field>
+        <input matInput placeholder="Priezvisko" [formControl]="lastName">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Meno" [formControl]="firstName">
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Rod. číslo" [formControl]="birthNumber">
+      </mat-form-field>
+    </mat-card>
+  
+    <mat-card class="calendar-card">
+      <h4>Vyberte vyšetrenia:</h4>
+  
+      <mat-checkbox (change)="onChange(option)" *ngFor="let option of options" [(ngModel)]="option.value">{{option.title}}
+      </mat-checkbox>
+  
+      <h4>Približný čas vyšetrenia {{sliderConfiguration.value}} min</h4>
+  
+      <mat-slider [max]="sliderConfiguration.max" [min]="sliderConfiguration.min" [step]="sliderConfiguration.step"
+        [discrete]="sliderConfiguration.thumbLabel" [showTickMarks]="sliderConfiguration.showTicks">
+        <input matSliderThumb [(ngModel)]="sliderConfiguration.value" #slider>
+      </mat-slider>
+    </mat-card>
+  
+    <mat-card class="calendar-card">
+      <mat-calendar [(selected)]="date"></mat-calendar>
+      <button mat-fab extended color="primary" (click)="onSetTime()">
+        Set Time
+      </button>
+    </mat-card>
+  
+    <mat-card class="summary-card">
+      <div>
+        <span class="subtitle">Priezvisko, Meno</span>
+        <span class="summaryValue">{{lastName.value}} <span *ngIf="lastName.value">,</span> {{firstName.value}}</span>
+      </div>
+      <div>
+        <span class="subtitle">Rodné číslo</span>
+        <span class="summaryValue">{{birthNumber.value}}</span>
+      </div>
+      <div>
+        <span class="subtitle">Dátum</span>
+        <span class="summaryValue">{{date | date: 'dd.MM.yyyy'}}</span>
+      </div>
+      <div>
+        <span class="subtitle">Čas</span>
+        <span class="summaryValue"></span>
+      </div>
+    </mat-card>
+  </div>
+
+  <reservation-bar></reservation-bar>
+</div>
+
+<input placeholder="Editable dial" aria-label="Editable dial" [ngxTimepicker]="editableDial" readonly
+  style="visibility: hidden;">
+<ngx-material-timepicker #editableDial [enableKeyboardInput]="true"></ngx-material-timepicker>
+
+<p (click)="test()">Selected date: {{date}}</p>
