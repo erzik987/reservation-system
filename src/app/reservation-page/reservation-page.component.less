@@ -35,18 +35,26 @@ reservation-bar {
     flex-direction: column;
     width: 300px;
     padding: 10px;
+    justify-content: space-between;
 
-    div {
-        .subtitle {
-            font-weight: 500
-        };
 
-        .summaryValue {
-            min-height: 20px;
+    .summary {
+        div {
+            .subtitle {
+                font-weight: 500
+            };
+    
+            .summaryValue {
+                min-height: 20px;
+            }
+    
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
         }
+    }
 
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 10px;
+    button {
+        width: 100%;
     }
 }

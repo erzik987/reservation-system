@@ -17,6 +17,8 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ReservationBarComponent } from './components/reservation-bar/reservation-bar.component';
 import { TooltipDirective } from "@webed/angular-tooltip";
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 const MATERIAL_MODULES = [
@@ -29,6 +31,7 @@ const MATERIAL_MODULES = [
   ReactiveFormsModule,
   MatSliderModule,
   MatCheckboxModule,
+  MatButtonModule
 ];
 
 

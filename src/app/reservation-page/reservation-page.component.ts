@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 import { NgxMaterialTimepickerComponent } from "ngx-material-timepicker/src/app/material-timepicker/ngx-material-timepicker.component";
-import { IOption, ISliderConfiguration } from "../models";
+import { IOption, ISliderConfiguration, ISummary } from "../models";
 
 @Component({
   selector: 'reservation-page',
@@ -11,9 +11,9 @@ import { IOption, ISliderConfiguration } from "../models";
 export class ReservationPageComponent {
   @ViewChild('editableDial') timepicker?: NgxMaterialTimepickerComponent;
 
-  public date?: Date | null;
-  public lastName = new FormControl();
-  public firstName = new FormControl();
+  public date?: Date;
+  public lastName = new FormControl("",Validators.required);
+  public firstName = new FormControl("",Validators.required);
   public birthNumber = new FormControl();
 
   public selectedOptions: IOption[] = [];
@@ -56,5 +56,29 @@ export class ReservationPageComponent {
   public onChange(option: IOption) {
     this.selectedOptions = this.options.filter(x => x.value);
     this.sliderConfiguration.value = this.selectedOptions.reduce((partialSum, a) => partialSum + a.time, 0)
+  }
+
+  public onOrder() {
+    if (!this.isSummaryValid()) {
+      console.error("INVALID FORM");
+      return;
+    }
+
+    const orderSummary: ISummary = {
+      firstName:  this.firstName.value?.toString() || "",
+      lastName: this.lastName.value?.toString() || "",
+      options: this.options.filter(o => o.value),
+      examinationTime: this.sliderConfiguration.value,
+      reservationDate: this.date || new Date(),
+      reservationTime: {hours: 12, minutes: 0}
+    }
+
+  }
+
+  public isSummaryValid(): boolean {
+    
+    return this.firstName.valid && this.lastName.valid
+
+    // return true
   }
 }
