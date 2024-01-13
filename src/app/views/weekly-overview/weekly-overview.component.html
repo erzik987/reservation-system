@@ -1,0 +1,20 @@
+<!-- <p>weekly-overview works!</p> -->
+
+<mat-form-field appearance="fill">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input [formControl]="startDate" matStartDate placeholder="Start date" />
+    <input [formControl]="endDate" matEndDate placeholder="End date" />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+<button mat-fab extended color="primary" (click)="onDateRangeChange()">OK</button>
+
+<div class="reservation-bar" *ngFor="let reservationBar of reservationBars">
+  <span
+    ><b>{{ reservationBar.date | date }}</b></span
+  >
+  <reservation-bar [reservations]="reservationBar.reservations"></reservation-bar>
+</div>

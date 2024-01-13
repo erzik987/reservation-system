@@ -1,7 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormControl, Validators } from "@angular/forms";
-import { NgxMaterialTimepickerComponent } from "ngx-material-timepicker/src/app/material-timepicker/ngx-material-timepicker.component";
-import { IOption, ISliderConfiguration, ISummary } from "../models";
+import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker/src/app/material-timepicker/ngx-material-timepicker.component';
+import { ReservationApiService } from '../services/reservations-api.service';
+import { emptyReservation } from '../constants';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogData, UniversalDialogComponent } from '../components/universal-dialog/universal-dialog.component';
+import { HelperService } from '../services/helper.service';
+import { Router } from '@angular/router';
+import { IReservation } from '../models';
 
 @Component({
   selector: 'reservation-page',
@@ -9,76 +14,75 @@ import { IOption, ISliderConfiguration, ISummary } from "../models";
   styleUrls: ['./reservation-page.component.less']
 })
 export class ReservationPageComponent {
-  @ViewChild('editableDial') timepicker?: NgxMaterialTimepickerComponent;
+  @ViewChild('timepicker') timepicker?: NgxMaterialTimepickerComponent;
 
-  public date?: Date;
-  public lastName = new FormControl("",Validators.required);
-  public firstName = new FormControl("",Validators.required);
-  public birthNumber = new FormControl();
+  constructor(private reservationService: ReservationApiService, public dialog: MatDialog, private helper: HelperService, private router: Router) {}
 
-  public selectedOptions: IOption[] = [];
+  public reservationsForDate: IReservation[] = [];
+  public reservation: IReservation = emptyReservation;
+  public displayError = false;
 
-  public options: IOption[] = [
-    {
-      value: false,
-      title: "Odber krvi",
-      time: 5,
-    },
-    {
-      value: false,
-      title: "Pravidelná kontrola",
-      time: 5
-    },
-    {
-      value: false,
-      title: "Prevzatie liekov",
-      time: 5
-    },
-  ]
-  
-  public sliderConfiguration: ISliderConfiguration = {
-    max : 30,
-    min : 0,
-    showTicks : true,
-    step : 5,
-    thumbLabel : true,
-    value : 0,
+  public navigateToWeeklyOverview() {
+    this.router.navigate(['/week-overview']);
   }
 
-  public test() {
-    console.log(this.timepicker);
-  }
-  
-  public onSetTime() {
-    this.timepicker?.open();
-  }
+  public async onOrder() {
+    const reservationRequest = this.finishReservation(this.reservation);
 
-  public onChange(option: IOption) {
-    this.selectedOptions = this.options.filter(x => x.value);
-    this.sliderConfiguration.value = this.selectedOptions.reduce((partialSum, a) => partialSum + a.time, 0)
-  }
-
-  public onOrder() {
     if (!this.isSummaryValid()) {
-      console.error("INVALID FORM");
+      console.error('INVALID FORM');
       return;
     }
 
-    const orderSummary: ISummary = {
-      firstName:  this.firstName.value?.toString() || "",
-      lastName: this.lastName.value?.toString() || "",
-      options: this.options.filter(o => o.value),
-      examinationTime: this.sliderConfiguration.value,
-      reservationDate: this.date || new Date(),
-      reservationTime: {hours: 12, minutes: 0}
-    }
+    const response = await this.reservationService
+      .createReservation(reservationRequest)
+      .then((createdReservation) => {
+        console.log(createdReservation);
+        this.openDialog({ title: 'Rezervácia úspešná', content: `Rezervácia prebehla úspešne` });
+      })
+      .catch((message) => {
+        console.log(reservationRequest);
+        console.log(message);
+        this.openDialog(message.error.displayMessage ? { title: 'Nastala chyba', content: `${message.error.displayMessage}` } : { title: 'Nastala chyba', content: `Pri rezervácií nastala chyba` });
+      });
+  }
 
+  public async onDateSelected(date: Date) {
+    const reservations = (await this.reservationService.getReservationForDate(this.helper.getCustomDate(date))).reservations;
+    this.reservationsForDate = reservations;
+  }
+
+  public onUserDetail(reservation: IReservation) {
+    this.reservation = reservation;
+  }
+
+  public openDialog(data: DialogData) {
+    this.dialog.open(UniversalDialogComponent, {
+      data: {
+        title: data.title,
+        content: data.content
+      }
+    });
+
+    this.dialog.afterAllClosed.subscribe((result) => {
+      // console.log(`Dialog result: ${result}`);
+      window.location.reload();
+    });
+  }
+
+  private finishReservation(reservationParams: IReservation) {
+    reservationParams.reservedEndTime = reservationParams.reservedStartTime + reservationParams.duration;
+    return reservationParams;
   }
 
   public isSummaryValid(): boolean {
-    
-    return this.firstName.valid && this.lastName.valid
+    const isReservationValid = this.reservation.firstName !== '' && this.reservation.lastName !== '' && this.reservation.reservedDate.date !== undefined && this.reservation.reservedStartTime !== 0;
 
-    // return true
+    if (!isReservationValid) {
+      this.displayError = true;
+      alert('Chybajuce udaje');
+    }
+
+    return isReservationValid;
   }
 }

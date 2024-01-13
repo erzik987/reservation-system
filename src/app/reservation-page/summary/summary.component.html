@@ -1,0 +1,22 @@
+<h4>Zhrnutie</h4>
+
+<div class="summary">
+  <div>
+    <span class="subtitle">Priezvisko, Meno</span>
+    <span class="summaryValue">{{ reservationParams.lastName }} <span *ngIf="reservationParams.lastName">,</span> {{ reservationParams.firstName }}</span>
+  </div>
+  <div>
+    <span class="subtitle">Email</span>
+    <span class="summaryValue">{{ reservationParams.email }}</span>
+  </div>
+  <div>
+    <span class="subtitle">Dátum</span>
+    <span class="summaryValue">{{ reservationParams.reservedDate.date | date : 'dd.MM.yyyy' }}</span>
+  </div>
+  <div>
+    <span class="subtitle">Čas</span>
+    <span class="summaryValue">{{ reservationParams.reservedStartTime | timeConverter }} </span>
+  </div>
+</div>
+
+<button mat-flat-button color="primary" (click)="onOrder()">Objednať</button>
