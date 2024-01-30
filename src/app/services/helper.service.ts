@@ -1,7 +1,6 @@
 import { Time } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { ICustomDate } from '../models';
-import { defaultCustomDate } from '../constants';
+import { ICustomDate, IReservation } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +10,7 @@ export class HelperService {
     return time.hours * 60 + time.minutes;
   }
 
-  public getCustomDate(date?: Date): ICustomDate {
-    if (!date) {
-      return defaultCustomDate;
-    }
-
+  public getCustomDate(date: Date): ICustomDate {
     return {
       date: date,
       dayInMonth: date.getDate(),
@@ -35,5 +30,16 @@ export class HelperService {
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
     return daysDifference;
+  }
+
+  public isReservationValid(reservation: IReservation): boolean {
+    const isReservationValid = reservation.firstName !== '' && reservation.lastName !== '' && reservation.reservedDate.date !== undefined && reservation.reservedStartTime !== 0;
+
+    if (!isReservationValid) {
+      console.error('INVALID FORM');
+      alert('Chybajuce udaje');
+    }
+
+    return isReservationValid;
   }
 }

@@ -1,18 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import Reservation, { Time } from '../models/Reservation';
-import Helper from '../library/Helper';
+import Reservation from '../models/Reservation';
 import { IResponseMessage } from '../models/ResponseMessage';
-
-// const response: IResponseMessage = {
-
-// }
 
 const createReservation = async (req: Request, res: Response, next: NextFunction) => {
   const reservationReq = req.body;
-
-  // const startTime = Helper.getTotalMinutesFromTime(reservationReq.reservedTime);
-  // const endTime = Helper.getTotalMinutesFromTime(reservationReq.reservedTime) + reservationReq.duration;
 
   const existingReservation = await Reservation.findOne({
     $and: [
@@ -80,6 +72,17 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+const searchReservations = (req: Request, res: Response, next: NextFunction) => {
+  const searchPhrase = req.query.searchPhrase?.toString() || '';
+  const regex = new RegExp(searchPhrase, 'i');
+
+  return Reservation.find({
+    $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }]
+  })
+    .then((reservations) => res.status(200).json({ reservations }))
+    .catch((error) => res.status(500).json({ error }));
+};
+
 const readForDate = (req: Request, res: Response, next: NextFunction) => {
   return Reservation.find({
     'reservedDate.year': req.body.year,
@@ -117,4 +120,4 @@ const deleteReservation = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-export default { createReservation, readReservation, readAll, readForDate, updateReservation, deleteReservation };
+export default { createReservation, readReservation, readAll, readForDate, updateReservation, deleteReservation, searchReservations };

@@ -2,14 +2,14 @@
 <h4>Základné informácie pacienta</h4>
 
 <mat-form-field>
-  <input matInput placeholder="Priezvisko" [(ngModel)]="reservationParams.lastName" />
+  <input matInput placeholder="Priezvisko" [(ngModel)]="reservationParams.lastName" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
 </mat-form-field>
 
 <mat-form-field>
-  <input matInput placeholder="Meno" [(ngModel)]="reservationParams.firstName" />
+  <input matInput placeholder="Meno" [(ngModel)]="reservationParams.firstName" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
 </mat-form-field>
 
 <mat-form-field>
-  <input matInput placeholder="Email" [(ngModel)]="reservationParams.email" />
+  <input matInput placeholder="Email" [(ngModel)]="reservationParams.email" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
 </mat-form-field>
 <!-- </mat-card> -->

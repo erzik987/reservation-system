@@ -1,29 +1,33 @@
 <div class="container">
   <div class="mat-cards-row">
-    <mat-card class="inputs-card">
+    <mat-card class="inputs-card action-card">
       <basic-info [reservationParams]="reservation"></basic-info>
     </mat-card>
 
-    <mat-card class="calendar-card">
+    <mat-card class="calendar-card action-card">
       <visit-reasons [reservationParams]="reservation"></visit-reasons>
     </mat-card>
 
-    <mat-card class="calendar-card">
+    <mat-card class="calendar-card action-card">
       <datetime [reservationParams]="reservation" (onDateSelected)="onDateSelected($event)"></datetime>
     </mat-card>
 
-    <mat-card class="summary-card">
+    <mat-card class="summary-card action-card">
       <summary [reservationParams]="reservation" (onSubmitButtonTrigger)="onOrder()"></summary>
     </mat-card>
 
-    <!-- <mat-card class="routing-card">
-      <div>
-        <button mat-flat-button color="primary" (click)="navigateToWeeklyOverview()">Dnešné rezervácie</button>
-      </div>
-    </mat-card> -->
+    <mat-card class="routing-card">
+      <action-panel
+        [reservationParams]="reservation"
+        (onCreateNewTrigger)="onCreateNewReservation()"
+        (onEditTrigger)="onEditReservation()"
+        (onDeleteTrigger)="onReservationDelete()"
+        (onUserSelected)="onUserSelected($event)"
+      ></action-panel>
+    </mat-card>
   </div>
 
-  <reservation-bar [reservations]="reservationsForDate" (onUserDetail)="onUserDetail($event)"></reservation-bar>
-</div>
+  <reservation-bar [reservations]="reservationsForDate" (onUserDetail)="onUserSelected($event)"></reservation-bar>
 
-<!-- <p (click)="test()">Selected date: {{ date }}</p> -->
+  <!-- <weekly-overview></weekly-overview> -->
+</div>

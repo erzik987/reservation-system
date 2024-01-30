@@ -18,15 +18,20 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ReservationBarComponent } from './components/reservation-bar/reservation-bar.component';
 import { TooltipDirective } from '@webed/angular-tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { TimeConverterPipe } from './pipes/time-converter.pipe';
 import { UniversalDialogComponent } from './components/universal-dialog/universal-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { WeeklyOverviewComponent } from './views/weekly-overview/weekly-overview.component';
 import { BasicInfoComponent } from './reservation-page/basic-info/basic-info.component';
 import { VisitReasonsComponent } from './reservation-page/visit-reasons/visit-reasons.component';
 import { DateTimeComponent } from './reservation-page/datetime/datetime.component';
 import { SummaryComponent } from './reservation-page/summary/summary.component';
+import { ActionPanelComponent } from './reservation-page/action-panel/action-panel.component';
+import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -39,7 +44,9 @@ const MATERIAL_MODULES = [
   MatSliderModule,
   MatCheckboxModule,
   MatButtonModule,
-  MatDialogModule
+  MatDialogModule,
+  MatIconModule,
+  MatListModule
 ];
 
 @NgModule({
@@ -49,14 +56,17 @@ const MATERIAL_MODULES = [
     ReservationBarComponent,
     TimeConverterPipe,
     UniversalDialogComponent,
+    SearchDialogComponent,
+    ConfirmationDialogComponent,
     WeeklyOverviewComponent,
     BasicInfoComponent,
     VisitReasonsComponent,
     DateTimeComponent,
-    SummaryComponent
+    SummaryComponent,
+    ActionPanelComponent
   ],
   imports: [TooltipDirective, BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, NgxMaterialTimepickerModule, ...MATERIAL_MODULES],
-  providers: [],
+  providers: [{ provide: MatDialogRef, useValue: { hasBackdrop: false } }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

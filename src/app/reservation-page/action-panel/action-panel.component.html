@@ -1,0 +1,14 @@
+<div class="container">
+  <button mat-fab matTooltip="Primary" color="primary" (click)="search()">
+    <mat-icon>search icon</mat-icon>
+  </button>
+  <button mat-fab matTooltip="Primary" color="primary" *ngIf="reservationParams.reservationState !== 'NewReservation'" (click)="createNew()">
+    <mat-icon>add icon</mat-icon>
+  </button>
+  <button mat-fab matTooltip="Primary" color="primary" *ngIf="reservationParams.reservationState === 'ReadOnly'" (click)="edit()">
+    <mat-icon>edit icon</mat-icon>
+  </button>
+  <button mat-fab matTooltip="Primary" color="warn" *ngIf="reservationParams.reservationState === 'ReadOnly' || reservationParams.reservationState === 'EditMode'" (click)="delete()">
+    <mat-icon>delete outline icon</mat-icon>
+  </button>
+</div>

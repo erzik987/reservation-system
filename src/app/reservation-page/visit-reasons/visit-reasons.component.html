@@ -1,6 +1,8 @@
 <h4>Vyberte dôvod a trvanie návštevy</h4>
 
-<mat-checkbox (change)="onOptionChange(option)" *ngFor="let option of reservationParams.visitReasons" [(ngModel)]="option.value">{{ option.title }} </mat-checkbox>
+<mat-checkbox (change)="onOptionChange(option)" *ngFor="let option of reservationParams.visitReasons" [(ngModel)]="option.value" [disabled]="reservationParams.reservationState === 'ReadOnly'"
+  >{{ option.title }}
+</mat-checkbox>
 
 <h4>Približný čas vyšetrenia {{ reservationParams.duration }} min</h4>
 
@@ -10,6 +12,7 @@
   [step]="sliderConfiguration.step"
   [discrete]="sliderConfiguration.thumbLabel"
   [showTickMarks]="sliderConfiguration.showTicks"
+  [disabled]="reservationParams.reservationState === 'ReadOnly'"
 >
   <input matSliderThumb [(ngModel)]="reservationParams.duration" #slider />
 </mat-slider>

@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_ENDPOINT } from '../constants';
 import { ICustomDate, IReservation } from '../models';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+
+export interface IDialogMessage {
+  title: string;
+  content: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +43,10 @@ export class ReservationApiService {
   public async deleteReservation(reservationId: string): Promise<any> {
     const url = `${API_ENDPOINT}/reservations/delete/${reservationId}`;
     return await firstValueFrom(this.http.delete(url));
+  }
+
+  public async searchReservations(search: string): Promise<{ reservations: IReservation[] }> {
+    const url = `${API_ENDPOINT}/reservations/search?searchPhrase=${search}`;
+    return await firstValueFrom(this.http.get<{ reservations: IReservation[] }>(url));
   }
 }

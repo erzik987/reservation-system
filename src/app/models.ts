@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 // }
 
 export interface ICustomDate {
-  date?: Date;
+  date: Date;
   dayInMonth: number;
   month: number;
   year: number;
@@ -53,6 +53,7 @@ export interface IPatient {
 }
 
 export interface IReservation {
+  _id?: string;
   firstName: string;
   lastName: string;
   email: string;

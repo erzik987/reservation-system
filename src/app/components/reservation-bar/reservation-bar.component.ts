@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ReservationBarService } from './reservation-bar.service';
-import { Time } from '@angular/common';
 import { IPatient, IReservation, ISegment } from 'src/app/models';
-import { ReservationApiService } from 'src/app/services/reservations-api.service';
-import { PatientApiService } from 'src/app/services/patients-api.service';
-import { mockReservationBar } from 'src/app/mocks';
 
 @Component({
   selector: 'reservation-bar',

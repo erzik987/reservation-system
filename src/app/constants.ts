@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ICustomDate, IOption, ISliderConfiguration, IReservation, ReservationState } from './models';
-import { FormControl, Validators } from '@angular/forms';
+import { IOption, ISliderConfiguration, IReservation, ReservationState } from './models';
+import { environment } from 'src/environments/environment';
 @Injectable()
 export class Constants {
-  public readonly API_ENDPOINT: string = 'http://localhost:9090/';
+  public readonly API_ENDPOINT: string = environment.apiEndpoint;
 }
 
-export const API_ENDPOINT: string = 'http://localhost:9090';
-
-export const defaultCustomDate: ICustomDate = {
-  dayInMonth: 0,
-  month: 0,
-  year: 0
-};
+export const API_ENDPOINT: string = environment.apiEndpoint;
 
 export const reservationOptions: IOption[] = [
   {
@@ -53,7 +47,7 @@ export const emptyReservation: IReservation = {
     dayInMonth: 0,
     month: 0,
     year: 0,
-    date: undefined
+    date: new Date()
   },
   reservationState: ReservationState.NewReservation
 };
