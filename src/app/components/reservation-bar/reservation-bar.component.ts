@@ -20,6 +20,7 @@ export class ReservationBarComponent implements OnChanges {
   public timeFrames: ISegment[] = [];
 
   public onBarClick(bar: ISegment) {
+    console.log(bar);
     if (bar.userSummary) {
       this.onUserDetail.emit(bar.userSummary);
     }

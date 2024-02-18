@@ -5,6 +5,7 @@ import { config } from './config/config';
 import Logging from './library/Logging';
 import patientRoutes from './routes/Patient';
 import reservationsRoutes from './routes/Reservation';
+import loginRoute from './routes/Login';
 
 const router = express();
 // Connect to mongoDB
@@ -48,6 +49,7 @@ const StartServer = () => {
 
   router.use('/patients', patientRoutes);
   router.use('/reservations', reservationsRoutes);
+  router.use('/login', loginRoute);
 
   router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
 

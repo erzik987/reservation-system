@@ -7,7 +7,7 @@
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve": "ng serve --port 8080"
+    "serve": "ng serve --port 4200"
   },
   "private": true,
   "dependencies": {

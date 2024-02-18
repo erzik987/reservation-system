@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'http://localhost:8080' // your development API endpoint
+  apiEndpoint: 'https://reservation-system-rest-api-cytudpnifa-nw.a.run.app/' // your development API endpoint
 };

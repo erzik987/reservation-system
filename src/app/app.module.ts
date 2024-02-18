@@ -32,6 +32,7 @@ import { SummaryComponent } from './reservation-page/summary/summary.component';
 import { ActionPanelComponent } from './reservation-page/action-panel/action-panel.component';
 import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { LoginPageComponent } from './views/login-page/login-page.component';
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -63,7 +64,8 @@ const MATERIAL_MODULES = [
     VisitReasonsComponent,
     DateTimeComponent,
     SummaryComponent,
-    ActionPanelComponent
+    ActionPanelComponent,
+    LoginPageComponent
   ],
   imports: [TooltipDirective, BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, NgxMaterialTimepickerModule, ...MATERIAL_MODULES],
   providers: [{ provide: MatDialogRef, useValue: { hasBackdrop: false } }],
