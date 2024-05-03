@@ -20,4 +20,4 @@
   </div>
 </div>
 
-<button mat-fab extended color="primary" (click)="onOrder()" [disabled]="reservationParams.reservationState === 'ReadOnly'">Objednať</button>
+<button mat-fab extended color="primary" (click)="onOrder()" [disabled]="reservationParams.state.getValue() === 'ReadOnly'">Objednať</button>

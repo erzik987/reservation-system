@@ -24,7 +24,8 @@ const ReservationSchema: Schema = new Schema(
     visitReasons: { type: Array<String>, required: true },
     reservedStartTime: { type: Number, required: true },
     reservedEndTime: { type: Number, required: true },
-    reservationState: { type: String, required: true }
+    // state: { type: String, required: true },
+    pacientNotes: { type: String, required: false }
   },
   {
     versionKey: false,

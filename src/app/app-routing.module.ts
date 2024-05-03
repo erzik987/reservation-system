@@ -4,11 +4,14 @@ import { ReservationPageComponent } from './reservation-page/reservation-page.co
 import { WeeklyOverviewComponent } from './views/weekly-overview/weekly-overview.component';
 import { LoginPageComponent } from './views/login-page/login-page.component';
 import { AuthGuard } from './services/auth.guard';
+import { PatientCrudComponent } from './views/patient-crud/patient-crud.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: '', canActivate: [AuthGuard], component: ReservationPageComponent },
-  { path: 'week-overview', component: WeeklyOverviewComponent }
+  { path: 'patient', canActivate: [AuthGuard], component: PatientCrudComponent },
+
+  { path: 'week-overview', canActivate: [AuthGuard], component: WeeklyOverviewComponent }
 ];
 
 @NgModule({

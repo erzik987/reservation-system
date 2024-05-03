@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="searchBar">
+    <mat-form-field>
+      <input matInput placeholder="Hľadaný výraz" [(ngModel)]="searchPhrase" (keydown.enter)="onEnterPressed()" />
+    </mat-form-field>
+
+    <button mat-fab matTooltip="Primary" color="primary" (click)="search()">
+      <mat-icon>search icon</mat-icon>
+    </button>
+  </div>
+
+  <div class="border"></div>
+  <mat-selection-list #res [multiple]="false" (selectionChange)="onSelectionChange($event)">
+    <div *ngFor="let patient of patients">
+      <mat-list-option [value]="patient">
+        <div class="list-item-content">
+          <div class="first-row">
+            <div matListItemTitle class="title">{{ patient.firstName }} {{ patient.lastName }}</div>
+            <div matListItemLine>{{ patient.email }}</div>
+          </div>
+        </div>
+      </mat-list-option>
+    </div>
+  </mat-selection-list>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Zavrieť</button>
+    <button mat-button (click)="selectReservation()" cdkFocusInitial>Vybrať</button>
+  </mat-dialog-actions>
+</div>

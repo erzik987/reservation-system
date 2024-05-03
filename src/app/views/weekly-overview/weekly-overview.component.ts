@@ -2,7 +2,9 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { DateRange, MAT_DATE_RANGE_SELECTION_STRATEGY, MatDateRangeSelectionStrategy } from '@angular/material/datepicker';
+import { of } from 'rxjs';
 import { IReservation } from 'src/app/models';
+import { ReservationService } from 'src/app/reservation-page/reservation-page.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { ReservationApiService } from 'src/app/services/reservations-api.service';
 
@@ -47,7 +49,7 @@ export interface IReservationBarsForDate {
 export class WeeklyOverviewComponent implements OnInit {
   public reservationBars: IReservationBarsForDate[] = [];
 
-  constructor(private helper: HelperService, private reservationService: ReservationApiService) {
+  constructor(private helper: HelperService, private reservationService: ReservationService) {
     // this.initializeReservationBars(7);
   }
 
@@ -98,7 +100,7 @@ export class WeeklyOverviewComponent implements OnInit {
   }
 
   private async getReservatrionsForDate(date: Date): Promise<IReservation[]> {
-    return (await this.reservationService.getReservationForDate(this.helper.getCustomDate(date))).reservations;
+    return await this.reservationService.getReservationForDate(this.helper.getCustomDate(date));
   }
 
   private reloadPage(): void {

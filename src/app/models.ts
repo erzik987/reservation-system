@@ -1,5 +1,6 @@
 import { Time } from '@angular/common';
 import { FormControl } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 // export interface IReservation extends IPatient {
 //   reservedDate: ICustomDate;
@@ -32,6 +33,7 @@ export interface ISegment {
 }
 
 export interface IOption {
+  id: number;
   value: boolean;
   title: string;
   time: number;
@@ -47,12 +49,18 @@ export interface ISliderConfiguration {
 }
 
 export interface IPatient {
+  _id?: string;
   firstName: string;
   lastName: string;
   email: string;
+  state: State;
 }
 
-export interface IReservation {
+export interface IReservation extends IReservationModel {
+  state: BehaviorSubject<State>;
+}
+
+export interface IReservationModel {
   _id?: string;
   firstName: string;
   lastName: string;
@@ -62,11 +70,11 @@ export interface IReservation {
   reservedDate: ICustomDate;
   reservedStartTime: number;
   reservedEndTime: number;
-  reservationState: ReservationState;
+  pacientNotes: string;
 }
 
-export enum ReservationState {
+export enum State {
   ReadOnly = 'ReadOnly',
   EditMode = 'EditMode',
-  NewReservation = 'NewReservation'
+  New = 'New'
 }

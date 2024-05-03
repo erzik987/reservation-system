@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { emptyReservation, sliderConfiguration } from 'src/app/constants';
-import { IReservation, ReservationState } from 'src/app/models';
+import { IReservation, State } from 'src/app/models';
 import { HelperService } from 'src/app/services/helper.service';
 import { ReservationApiService } from 'src/app/services/reservations-api.service';
 
@@ -28,8 +28,7 @@ export class DateTimeComponent {
   }
 
   public async onDateChange(date: Date) {
-    if (this.reservationParams.reservationState !== ReservationState.ReadOnly) {
-      console.log('asd');
+    if (this.reservationParams.state.getValue() !== State.ReadOnly) {
       this.setReservationParams(date);
     }
     this.onDateSelected.emit(date);

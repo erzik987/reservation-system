@@ -1,0 +1,45 @@
+<div class="container">
+  <mat-card class="inputs-card">
+    <h4>Základné informácie pacienta</h4>
+
+    <div class="patient-row">
+      <mat-form-field>
+        <input matInput placeholder="Priezvisko" [(ngModel)]="patient.lastName" [disabled]="patient.state === 'ReadOnly'" />
+      </mat-form-field>
+      <div *ngIf="dirty && patient.lastName === ''" class="error">Priezvisko je povinné</div>
+    </div>
+
+    <div class="patient-row">
+      <mat-form-field>
+        <input matInput placeholder="Meno" [(ngModel)]="patient.firstName" [disabled]="patient.state === 'ReadOnly'" />
+      </mat-form-field>
+      <div *ngIf="dirty && patient.firstName === ''" class="error">Meno je povinné</div>
+    </div>
+
+    <div class="patient-row">
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="patient.email" [disabled]="patient.state === 'ReadOnly'" />
+      </mat-form-field>
+      <div *ngIf="dirty && patient.email === ''" class="error">Email je povinný</div>
+    </div>
+    <button [disabled]="patient.state === 'ReadOnly'" mat-fab extended color="primary" (click)="onSubmit()">Uložiť</button>
+  </mat-card>
+
+  <mat-card class="action-card">
+    <button mat-fab matTooltip="Primary" color="primary" (click)="search()">
+      <mat-icon>search icon</mat-icon>
+    </button>
+    <button mat-fab matTooltip="Primary" color="primary" *ngIf="patient.state !== 'New'" (click)="createNew()">
+      <mat-icon>add icon</mat-icon>
+    </button>
+    <button mat-fab matTooltip="Primary" color="primary" *ngIf="patient.state === 'ReadOnly'" (click)="edit()">
+      <mat-icon>edit icon</mat-icon>
+    </button>
+    <button mat-fab matTooltip="Primary" color="warn" *ngIf="patient.state === 'ReadOnly' || patient.state === 'EditMode'" (click)="delete()">
+      <mat-icon>delete outline icon</mat-icon>
+    </button>
+  </mat-card>
+</div>
+<div class="container">
+  <button mat-fab extended color="primary" (click)="redirectToReservations()">Späť na rezervácie</button>
+</div>

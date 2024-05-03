@@ -6,6 +6,7 @@ import Logging from './library/Logging';
 import patientRoutes from './routes/Patient';
 import reservationsRoutes from './routes/Reservation';
 import loginRoute from './routes/Login';
+import emailRoute from './routes/Email';
 
 const router = express();
 // Connect to mongoDB
@@ -47,14 +48,26 @@ const StartServer = () => {
     next();
   });
 
+  router.use('/login', loginRoute);
+
+  router.use((req, res, next) => {
+    if (req.headers.authorization === 'Bearer ' + process.env.LOGIN_TOKEN || '') {
+      console.log('Authorized');
+      next();
+    } else {
+      console.log('Unauthorized');
+      return res.status(401).json({ message: 'Autorizácia zlyhala' });
+    }
+  });
+
   router.use('/patients', patientRoutes);
   router.use('/reservations', reservationsRoutes);
-  router.use('/login', loginRoute);
+  router.use('/email', emailRoute);
 
   router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
 
   router.use((req, res, next) => {
-    const error = new Error('not found');
+    const error = new Error('Root path not found');
     Logging.error(error);
 
     return res.status(404).json({ message: error.message });

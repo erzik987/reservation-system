@@ -16,8 +16,6 @@ export class ReservationBarService {
         reserved: false,
         timeFrom: this.helper.convertTimeToNumber(time),
         timeTo: this.helper.convertTimeToNumber(time) + 5
-        // time: { ...time }
-        // additionalClass: "mid"
       };
 
       if (time.minutes === 0 || time.minutes === 30) {
@@ -60,10 +58,6 @@ export class ReservationBarService {
 
     return segments;
   }
-
-  // public isEqual(obj1: Time, obj2: Time): boolean {
-  //   return JSON.stringify(obj1) === JSON.stringify(obj2);
-  // }
 
   public timeTick(time: Time, tick: number): Time {
     time.minutes = time.minutes + tick;

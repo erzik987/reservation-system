@@ -1,15 +1,30 @@
-<!-- <mat-card> -->
 <h4>Základné informácie pacienta</h4>
 
+<form>
+  <mat-form-field>
+    <input type="text" placeholder="Priezvisko" aria-label="Priezvisko" matInput [formControl]="selectedPatient" [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onNameSelected($event)" [displayWith]="displayFn">
+      <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient">
+        <div class="option-container">
+          <div>{{ patient.lastName }} {{ patient.firstName }}</div>
+          <div>
+            <small>{{ patient.email }}</small>
+          </div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
 <mat-form-field>
-  <input matInput placeholder="Priezvisko" [(ngModel)]="reservationParams.lastName" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
+  <input matInput placeholder="Meno" [(ngModel)]="reservationParams.firstName" [disabled]="reservationParams.state.getValue() === 'ReadOnly'" />
 </mat-form-field>
 
 <mat-form-field>
-  <input matInput placeholder="Meno" [(ngModel)]="reservationParams.firstName" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
+  <input matInput placeholder="Email" [(ngModel)]="reservationParams.email" [disabled]="reservationParams.state.getValue() === 'ReadOnly'" />
 </mat-form-field>
 
-<mat-form-field>
-  <input matInput placeholder="Email" [(ngModel)]="reservationParams.email" [disabled]="reservationParams.reservationState === 'ReadOnly'" />
-</mat-form-field>
-<!-- </mat-card> -->
+<div>
+  <span (click)="test()">Nenašli ste pacienta v databázi ? </span>
+  <a href="#" class="custom-link" (click)="addPatient($event)">Pridať pacienta</a>
+</div>

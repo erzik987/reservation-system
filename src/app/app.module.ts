@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,20 +20,25 @@ import { ReservationBarComponent } from './components/reservation-bar/reservatio
 import { TooltipDirective } from '@webed/angular-tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TimeConverterPipe } from './pipes/time-converter.pipe';
 import { UniversalDialogComponent } from './components/universal-dialog/universal-dialog.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { WeeklyOverviewComponent } from './views/weekly-overview/weekly-overview.component';
 import { BasicInfoComponent } from './reservation-page/basic-info/basic-info.component';
 import { VisitReasonsComponent } from './reservation-page/visit-reasons/visit-reasons.component';
 import { DateTimeComponent } from './reservation-page/datetime/datetime.component';
 import { SummaryComponent } from './reservation-page/summary/summary.component';
 import { ActionPanelComponent } from './reservation-page/action-panel/action-panel.component';
-import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
+import { SearchReservationDialogComponent } from './components/search-reservation-dialog/search-reservation-dialog.component';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { LoginPageComponent } from './views/login-page/login-page.component';
+import { PatientCrudComponent } from './views/patient-crud/patient-crud.component';
+import { SearchPatientDialogComponent } from './components/search-patient-dialog/search-patient-dialog.component';
+import { PatientApiService } from './services/patients-api.service';
+import { authInterceptor } from './services/auth.interceptor';
 
 const MATERIAL_MODULES = [
   MatCardModule,
@@ -46,8 +52,10 @@ const MATERIAL_MODULES = [
   MatCheckboxModule,
   MatButtonModule,
   MatDialogModule,
+  MatSnackBarModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({
@@ -57,7 +65,8 @@ const MATERIAL_MODULES = [
     ReservationBarComponent,
     TimeConverterPipe,
     UniversalDialogComponent,
-    SearchDialogComponent,
+    SearchReservationDialogComponent,
+    SearchPatientDialogComponent,
     ConfirmationDialogComponent,
     WeeklyOverviewComponent,
     BasicInfoComponent,
@@ -65,10 +74,11 @@ const MATERIAL_MODULES = [
     DateTimeComponent,
     SummaryComponent,
     ActionPanelComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PatientCrudComponent
   ],
   imports: [TooltipDirective, BrowserModule, HttpClientModule, AppRoutingModule, BrowserAnimationsModule, NgxMaterialTimepickerModule, ...MATERIAL_MODULES],
-  providers: [{ provide: MatDialogRef, useValue: { hasBackdrop: false } }],
+  providers: [provideHttpClient(withInterceptors([authInterceptor])), PatientApiService, TimeConverterPipe, { provide: MatDialogRef, useValue: { hasBackdrop: false } }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -16,18 +16,20 @@
       <summary [reservationParams]="reservation" (onSubmitButtonTrigger)="onOrder()"></summary>
     </mat-card>
 
-    <mat-card class="routing-card">
+    <mat-card>
       <action-panel
         [reservationParams]="reservation"
         (onCreateNewTrigger)="onCreateNewReservation()"
         (onEditTrigger)="onEditReservation()"
         (onDeleteTrigger)="onReservationDelete()"
-        (onUserSelected)="onUserSelected($event)"
+        (onReservationByNameSelected)="onReservationByNameSelected($event)"
       ></action-panel>
     </mat-card>
   </div>
 
-  <reservation-bar [reservations]="reservationsForDate" (onUserDetail)="onUserSelected($event)"></reservation-bar>
+  <reservation-bar [reservations]="reservationsForDate" (onUserDetail)="onReservationByNameSelected($event)"></reservation-bar>
 
   <!-- <weekly-overview></weekly-overview> -->
 </div>
+
+<!-- <h3 (click)="test()">test</h3> -->

@@ -1,9 +1,7 @@
 <h4>Vyberte dátum a čas</h4>
 
 <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
-<!--  -->
-<!-- [disabled]="reservationParams.reservationState === 'ReadOnly'" -->
-<button mat-fab extended color="primary" (click)="onSetTime()" [disabled]="reservationParams.reservationState === 'ReadOnly'">Set Time</button>
+<button mat-fab extended color="primary" (click)="onSetTime()" [disabled]="reservationParams.state.getValue() === 'ReadOnly'">Nastaviť čas</button>
 
-<input placeholder="Gap with 5" [ngxTimepicker]="timepicker" readonly [format]="24" min="06:00 am" max="16:00 pm" style="visibility: hidden" />
+<input placeholder="Gap with 5" [ngxTimepicker]="timepicker" readonly [format]="24" min="07:00 am" max="15:00 pm" style="visibility: hidden" />
 <ngx-material-timepicker (timeSet)="onTimeSelected($event)" #timepicker [minutesGap]="5"></ngx-material-timepicker>

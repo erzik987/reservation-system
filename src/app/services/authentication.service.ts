@@ -29,8 +29,8 @@ export class AuthenticationService {
     try {
       return (await firstValueFrom(this.http.post<AuthResponse>(url, { token: token }))).authenticated;
     } catch (error) {
-      alert('Chybné prihlasovacie údaje');
       console.error(error);
+      alert('Chybné prihlasovacie údaje');
       return false;
     }
   }

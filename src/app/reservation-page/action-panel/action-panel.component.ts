@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/components/confirmation-dialog/confirmation-dialog.component';
-import { SearchDialogComponent } from 'src/app/components/search-dialog/search-dialog.component';
+import { SearchReservationDialogComponent } from 'src/app/components/search-reservation-dialog/search-reservation-dialog.component';
 import { emptyReservation } from 'src/app/constants';
 import { IReservation } from 'src/app/models';
 
@@ -19,7 +19,7 @@ export class ActionPanelComponent implements OnInit {
   @Output() public onCreateNewTrigger = new EventEmitter();
   @Output() public onEditTrigger = new EventEmitter();
   @Output() public onDeleteTrigger = new EventEmitter();
-  @Output() public onUserSelected = new EventEmitter<IReservation>();
+  @Output() public onReservationByNameSelected = new EventEmitter<IReservation>();
 
   public createNew() {
     this.onCreateNewTrigger.emit();
@@ -48,13 +48,13 @@ export class ActionPanelComponent implements OnInit {
   }
 
   public search() {
-    const dialogRef = this.dialog.open(SearchDialogComponent, {
+    const dialogRef = this.dialog.open(SearchReservationDialogComponent, {
       minHeight: 300,
       minWidth: 600
     });
 
     dialogRef.afterClosed().subscribe((reservation) => {
-      this.onUserSelected.emit(reservation);
+      this.onReservationByNameSelected.emit(reservation);
     });
   }
 }

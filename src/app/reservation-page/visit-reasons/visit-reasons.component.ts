@@ -9,6 +9,7 @@ import { IOption, ISliderConfiguration, IReservation } from 'src/app/models';
 })
 export class VisitReasonsComponent {
   @Input() public reservationParams: IReservation = emptyReservation;
+  // @Input() public pacientNotes = emptyReservation;
 
   public sliderConfiguration: ISliderConfiguration = sliderConfiguration;
 
