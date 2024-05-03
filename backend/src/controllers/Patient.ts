@@ -71,7 +71,6 @@ const searchPatients = (req: Request, res: Response, next: NextFunction) => {
   const searchPhrase = req.query.searchPhrase?.toString() || '';
   const regex = new RegExp(searchPhrase, 'i');
 
-  // return res.status(200).json({ body: 'I work' });
   return Patient.find({
     $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }, { email: { $regex: regex } }]
   })

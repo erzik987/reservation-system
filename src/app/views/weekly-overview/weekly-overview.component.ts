@@ -49,18 +49,13 @@ export interface IReservationBarsForDate {
 export class WeeklyOverviewComponent implements OnInit {
   public reservationBars: IReservationBarsForDate[] = [];
 
-  constructor(private helper: HelperService, private reservationService: ReservationService) {
-    // this.initializeReservationBars(7);
-  }
+  constructor(private helper: HelperService, private reservationService: ReservationService) {}
 
   public startDate = new FormControl<Date>(new Date());
   public endDate = new FormControl<Date>(this.addDaysToDate(new Date(), 7));
 
   public ngOnInit() {
     this.onDateRangeChange();
-    // this.startDate.valueChanges.subscribe(() => {
-    //   this.onDateRangeChange();
-    // });
   }
 
   private addDaysToDate(date: Date | null, numberOfDays: number = 0): Date {
@@ -85,8 +80,7 @@ export class WeeklyOverviewComponent implements OnInit {
   }
 
   public async onDateRangeChange() {
-    // this.endDate.setValue(this.addDaysToDate(new Date(), 7));
-    const numberOfDays = 7; //this.helper.getDaysDifference(this.startDate.value, this.endDate.value);
+    const numberOfDays = 7;
     console.log(this.endDate.value);
     console.log(this.startDate.value);
     console.log(numberOfDays);

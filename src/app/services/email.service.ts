@@ -12,7 +12,6 @@ interface SendEmailReq {
   senderName: string;
   subject: string;
   htmlMessage: string;
-  // token: string;
 }
 
 @Injectable({
@@ -127,8 +126,4 @@ export class EmailService {
       ${this.getDynamicContent(reservation)}
     `;
   }
-
-  // public test(reservation: IReservation) {
-  //   console.log(this.getEditedReservationMessage(reservation));
-  // }
 }

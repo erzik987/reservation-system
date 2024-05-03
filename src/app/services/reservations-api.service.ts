@@ -31,11 +31,6 @@ export class ReservationApiService {
     return await firstValueFrom(this.http.get<{ reservations: IReservation[] }>(url));
   }
 
-  // public async getReservationForDate(customDate: ICustomDate): Promise<{ reservations: IReservation[] }> {
-  //   const url = `${API_ENDPOINT}/reservations/getForDate`;
-  //   return await firstValueFrom(this.http.post<{ reservations: IReservation[] }>(url, customDate));
-  // }
-
   public async getReservationForDate(customDate: ICustomDate): Promise<HttpResponse<{ reservations: IReservationModel }>> {
     const url = `${API_ENDPOINT}/reservations/getForDate`;
     return firstValueFrom(
@@ -56,11 +51,6 @@ export class ReservationApiService {
     const url = `${API_ENDPOINT}/reservations/delete/${reservationId}`;
     return await firstValueFrom(this.http.delete(url));
   }
-
-  // public async searchReservations(search: string): Promise<{ reservations: IReservation[] }> {
-  //   const url = `${API_ENDPOINT}/reservations/search?searchPhrase=${search}`;
-  //   return await firstValueFrom(this.http.get<{ reservations: IReservation[] }>(url));
-  // }
 
   public async searchReservations(search: string): Promise<HttpResponse<{ reservations: IReservationModel }>> {
     const url = `${API_ENDPOINT}/reservations/search?searchPhrase=${search}`;

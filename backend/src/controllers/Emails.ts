@@ -5,9 +5,9 @@ import { IResponseMessage } from '../models/ResponseMessage';
 const sendMail = async (req: Request, res: Response, next: NextFunction) => {
   const reqBody = req.body;
   const transporter = nodeMailer.createTransport({
-    host: process.env.EMAIL_SERVER_HOSTNAME, // SMTP server address (usually mail.your-domain.com)
-    port: 465, // Port for SMTP (usually 465)
-    secure: true, // Usually true if connecting to port 465
+    host: process.env.EMAIL_SERVER_HOSTNAME,
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.SENDER_EMAIL,
       pass: process.env.SENDER_EMAIL_PASSWORD
@@ -34,11 +34,6 @@ const sendMail = async (req: Request, res: Response, next: NextFunction) => {
 
     return res.status(500).json(errorResponse);
   }
-
-  // }
-  //  else {
-  // return res.status(401).json({ authenticated: false, message: 'Unauthorized' });
-  // }
 };
 
 export default { sendMail };

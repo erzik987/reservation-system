@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/htt
 import { Injectable } from '@angular/core';
 import { IPatient } from '../models';
 import { API_ENDPOINT } from '../constants';
-import { catchError, firstValueFrom, throwError } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { HelperService } from './helper.service';
 

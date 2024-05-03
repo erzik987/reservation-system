@@ -32,12 +32,8 @@ export class ReservationPageComponent implements OnInit {
   }
 
   public onEditReservation() {
-    this.reservation.state.next(State.EditMode); // = State.EditMode;
+    this.reservation.state.next(State.EditMode);
   }
-
-  // public test() {
-  //   this.reservation.state.next(State.EditMode); // = State.EditMode;
-  // }
 
   public async onReservationDelete() {
     await this.reservationService.delete(this.reservation);
@@ -45,9 +41,6 @@ export class ReservationPageComponent implements OnInit {
 
   public async onOrder() {
     const reservationRequest = this.finishReservation(this.reservation);
-
-    // this.emailService.test(reservationRequest);
-    // return;
 
     if (!this.helper.isReservationValid(reservationRequest)) {
       return;
@@ -76,7 +69,7 @@ export class ReservationPageComponent implements OnInit {
       return;
     }
 
-    reservation.state.next(State.ReadOnly); // = State.ReadOnly;
+    reservation.state.next(State.ReadOnly);
     this.reservation = reservation;
   }
 
@@ -107,6 +100,5 @@ export class ReservationPageComponent implements OnInit {
     this.reservation.state.next(State.ReadOnly);
 
     await this.onDateSelected(this.reservation.reservedDate.date);
-    // this.openDialog({ title: response.dialogTitle, content: response.dialogBody });
   }
 }
